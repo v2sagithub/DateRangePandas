@@ -1,0 +1,26 @@
+import pandas as pd
+from datetime import datetime
+
+# Assuming df is already created with 200 records
+# Define the date range
+start_range = datetime(1972, 10, 12)
+end_range = datetime(1973, 4, 1)
+
+# Filter the DataFrame for rows within the date range
+filtered_df = df[(df['install_date'] >= start_range) & (df['install_date'] <= end_range)]
+
+# Extract the year from the install_date in the filtered DataFrame
+filtered_df['year'] = filtered_df['install_date'].dt.year
+
+# Create a function to group the years into 5-year ranges
+def get_5_year_range(year):
+    return f"{year // 5 * 5}-{(year // 5 * 5) + 4}"
+
+# Apply the function to create a new column for 5-year ranges
+filtered_df['5_year_range'] = filtered_df['year'].apply(get_5_year_range)
+
+# Group by the 5-year range and count the number of records in each range
+grouped_df = filtered_df.groupby('5_year_range').size().reset_index(name='count')
+
+# Display the grouped DataFrame
+print(grouped_df)
