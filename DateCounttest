@@ -1,7 +1,12 @@
 import pandas as pd
 from datetime import datetime
 
-# Assuming df is already created with 200 records
+# Read the CSV file into a DataFrame
+df = pd.read_csv('your_file.csv')
+
+# Ensure that the 'install_date' column is parsed as datetime
+df['install_date'] = pd.to_datetime(df['install_date'])
+
 # Define the date range
 start_range = datetime(1972, 10, 12)
 end_range = datetime(1973, 4, 1)
